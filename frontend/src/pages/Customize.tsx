@@ -72,7 +72,7 @@ const Customize = () => {
 
       // handleDecals(type, `data:image/png;base64,${processedImagePromise.photo}`)
 
-      if(!data) return
+      if(!data.photo) return
 
       handleDecals(type, `data:image/png;base64,${data.photo}`)
     } catch (error) {
