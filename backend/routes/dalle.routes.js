@@ -13,7 +13,7 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
 
 router.route('/').get((req, res) => {
-  res.status(200).json({ message: "Hello to the generator route" })
+  res.status(200).json({ message: "Hello to the image generator route" })
 })
 
 router.route('/').post(async (req, res) => {
