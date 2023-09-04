@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSnapshot } from 'valtio';
 import valtioState from '../valtioStore/store';
-import { getContrastingColor } from '../../helpers/helpers';
+import { getContrastingColor } from '../helpers/helpers';
 import { ButtonType } from '../types/types';
 
 
