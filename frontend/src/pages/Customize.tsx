@@ -71,6 +71,9 @@ const Customize = () => {
       // const processedImagePromise:any = await processBase64Image(data);
 
       // handleDecals(type, `data:image/png;base64,${processedImagePromise.photo}`)
+
+      if(!data) return
+
       handleDecals(type, `data:image/png;base64,${data.photo}`)
     } catch (error) {
       alert(error)
