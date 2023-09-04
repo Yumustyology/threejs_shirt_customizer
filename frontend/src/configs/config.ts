@@ -3,7 +3,7 @@ const config = {
     backendUrl: "http://localhost:5000/api/genImg/dalle",
   },
   production: {
-    backendUrl: "https://devswag.onrender.com/api/v1/dalle",
+    backendUrl: "https://yung-dalle-image-api.onrender.com",
   },
 };
 
