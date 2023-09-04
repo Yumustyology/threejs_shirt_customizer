@@ -4,14 +4,15 @@ import { useSnapshot } from 'valtio';
 import config from '../configs/config';
 import valtioState from '../valtioStore/store';
 // import { download } from '../assets';
-import { downloadCanvasToImage, reader } from '../configs/helpers';
+import { downloadCanvasToImage, reader } from '../../helpers/helpers';
+import { processBase64Image } from '../../helpers/base64ToPNG';
 import { EditorTabs, FilterTabs, DecalTypes } from '../configs/constant';
 import { fadeAnimation, slideAnimation } from '../configs/motion';
 import { AIPicker, ColorPicker, FilePicker, TabPicker, Button } from '../components';
 import { DecalsTypes } from '../types/types';
 
 const Customize = () => {
-  
+
   const valtioStateSnap = useSnapshot(valtioState);
 
   const [file, setFile] = useState('');
@@ -37,7 +38,7 @@ const Customize = () => {
           readFile={readFile}
         />
       case "aipicker":
-        return <AIPicker 
+        return <AIPicker
           prompt={prompt}
           setPrompt={setPrompt}
           generatingImg={generatingImg}
@@ -48,8 +49,8 @@ const Customize = () => {
     }
   }
 
-  const handleSubmit = async (type:keyof DecalsTypes) => {
-    if(!prompt) return alert("Please enter a prompt");
+  const handleSubmit = async (type: keyof DecalsTypes) => {
+    if (!prompt) return alert("Please enter a prompt");
 
     try {
       setGeneratingImg(true);
@@ -66,7 +67,16 @@ const Customize = () => {
 
       const data = await response.json();
 
-      handleDecals(type, `data:image/png;base64,${data.photo}`)
+      const processedImagePromise:any = await processBase64Image(data);
+
+      // processedImagePromise.then((processedBase64Image) => {
+      //   // Use the processedBase64Image as needed
+      //   console.log(processedBase64Image);
+      // });
+
+
+      handleDecals(type, `data:image/png;base64,${processedImagePromise.photo}`)
+      // handleDecals(type, `data:image/png;base64,${data.photo}`)
     } catch (error) {
       alert(error)
     } finally {
@@ -76,25 +86,25 @@ const Customize = () => {
   }
 
 
- const handleDecals = (type:keyof DecalsTypes, result:string) => {
-  
+  const handleDecals = (type: keyof DecalsTypes, result: string) => {
+
     const decalType = DecalTypes[type];
 
     valtioState[decalType.stateProperty] = result;
 
-    if(!activeFilterTab[decalType.filterTab]) {
+    if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab)
     }
 
   }
 
-  const handleActiveFilterTab = (tabName:string) => {
+  const handleActiveFilterTab = (tabName: string) => {
     switch (tabName) {
       case "logoShirt":
-          valtioState.isLogoTexture = !activeFilterTab[tabName];
+        valtioState.isLogoTexture = !activeFilterTab[tabName];
         break;
       case "stylishShirt":
-          valtioState.isFullTexture = !activeFilterTab[tabName];
+        valtioState.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
         valtioState.isLogoTexture = true;
@@ -104,7 +114,7 @@ const Customize = () => {
 
     // after setting the state, activeFilterTab is updated
 
-    setActiveFilterTab((prevState:any) => {
+    setActiveFilterTab((prevState: any) => {
       return {
         ...prevState,
         [tabName]: !prevState[tabName]
@@ -112,9 +122,9 @@ const Customize = () => {
     })
   }
 
-  const readFile = (type:any) => {
+  const readFile = (type: any) => {
     reader(file)
-      .then((result:any) => {
+      .then((result: any) => {
         handleDecals(type, result);
         setActiveEditorTab("");
       })
