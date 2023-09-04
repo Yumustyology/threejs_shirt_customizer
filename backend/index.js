@@ -16,4 +16,4 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: "Welcome to the image generatorAPI by Yung" })
 })
 
-app.listen(8080, () => console.log('Server has started on port 5000'))
+app.listen(5000, () => console.log('Server has started on port 5000'))

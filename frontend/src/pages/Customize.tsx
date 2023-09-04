@@ -11,6 +11,7 @@ import { fadeAnimation, slideAnimation } from '../configs/motion';
 import { AIPicker, ColorPicker, FilePicker, TabPicker, Button } from '../components';
 import { DecalsTypes } from '../types/types';
 
+
 const Customize = () => {
 
   const valtioStateSnap = useSnapshot(valtioState);
@@ -55,7 +56,7 @@ const Customize = () => {
     try {
       setGeneratingImg(true);
 
-      const response = await fetch('http://localhost:8080/api/v1/dalle', {
+      const response = await fetch(config.development.backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -67,16 +68,10 @@ const Customize = () => {
 
       const data = await response.json();
 
-      const processedImagePromise:any = await processBase64Image(data);
+      // const processedImagePromise:any = await processBase64Image(data);
 
-      // processedImagePromise.then((processedBase64Image) => {
-      //   // Use the processedBase64Image as needed
-      //   console.log(processedBase64Image);
-      // });
-
-
-      handleDecals(type, `data:image/png;base64,${processedImagePromise.photo}`)
-      // handleDecals(type, `data:image/png;base64,${data.photo}`)
+      // handleDecals(type, `data:image/png;base64,${processedImagePromise.photo}`)
+      handleDecals(type, `data:image/png;base64,${data.photo}`)
     } catch (error) {
       alert(error)
     } finally {
