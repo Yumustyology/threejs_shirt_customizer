@@ -22,8 +22,6 @@ const Customize = () => {
 
   const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
-
-  // const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
@@ -123,7 +121,6 @@ const Customize = () => {
     reader(file)
       .then((result: any) => {
         handleDecals(type, result);
-        // setActiveEditorTab("");
         valtioState.activeEditorTab = '';
       })
   }
@@ -140,7 +137,6 @@ const Customize = () => {
                   <TabPicker
                     key={tab.name}
                     tab={tab}
-                    // handleClick={() => setActiveEditorTab(tab.name)} />
                     handleClick={() => valtioState.activeEditorTab = tab.name} />
                 ))}
                 {generateTabContent()}
