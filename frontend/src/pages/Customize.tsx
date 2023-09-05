@@ -56,7 +56,7 @@ const Customize = () => {
     try {
       setGeneratingImg(true);
 
-      const response = await fetch(config.production.backendUrl, {
+      const response = await fetch(config.development.backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
