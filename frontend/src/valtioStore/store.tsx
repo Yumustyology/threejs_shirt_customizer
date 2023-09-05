@@ -7,6 +7,7 @@ const valtioState = proxy({
     isFullTexture: false,
     logoDecal: '../blocks.png',
     fullDecal: '../blocks.png',
+    activeEditorTab: ''
 })
 
 export default valtioState

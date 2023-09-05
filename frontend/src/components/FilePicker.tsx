@@ -2,10 +2,12 @@ import React from 'react'
 
 import CustomButton from './Button'
 import { FilePickerType } from '../types/types'
+import CloseXBtn from './CloseXBtn'
 
 const FilePicker = ({ file, setFile, readFile }:FilePickerType) => {
   return (
     <div className="filepicker-container">
+    <CloseXBtn />
       <div className="flex-1 flex flex-col">
         <input 
           id="file-upload"

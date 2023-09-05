@@ -2,10 +2,12 @@ import React from 'react'
 
 import Button from './Button';
 import { AIPickerTypes } from '../types/types';
+import CloseXBtn from './CloseXBtn';
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }:AIPickerTypes) => {
   return (
     <div className="aipicker-container">
+    <CloseXBtn />
       <textarea 
         placeholder="Ask AI..."
         rows={5}

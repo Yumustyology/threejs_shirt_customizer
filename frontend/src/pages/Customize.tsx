@@ -16,12 +16,14 @@ const Customize = () => {
 
   const valtioStateSnap = useSnapshot(valtioState);
 
+  let {activeEditorTab} = valtioStateSnap
+
   const [file, setFile] = useState('');
 
   const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
 
-  const [activeEditorTab, setActiveEditorTab] = useState("");
+  // const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
@@ -75,7 +77,8 @@ const Customize = () => {
       alert(error)
     } finally {
       setGeneratingImg(false);
-      setActiveEditorTab("");
+      valtioState.activeEditorTab = '';
+      // setActiveEditorTab("");
     }
   }
 
@@ -120,7 +123,8 @@ const Customize = () => {
     reader(file)
       .then((result: any) => {
         handleDecals(type, result);
-        setActiveEditorTab("");
+        // setActiveEditorTab("");
+        valtioState.activeEditorTab = '';
       })
   }
 
@@ -136,14 +140,18 @@ const Customize = () => {
                   <TabPicker
                     key={tab.name}
                     tab={tab}
-                    handleClick={() => setActiveEditorTab(tab.name)} />
+                    // handleClick={() => setActiveEditorTab(tab.name)} />
+                    handleClick={() => valtioState.activeEditorTab = tab.name} />
                 ))}
                 {generateTabContent()}
               </div>
             </div>
           </motion.div>
           <motion.div className='absolute z-10 top-5 right-5' {...fadeAnimation}>
-            <Button type='filled' title='Go Back' handleClick={() => valtioState.introScreen = true} customStyles='w-fit px-4 py-2.5 font-bold text-sm' />
+            <Button type='filled' title='Go Back' handleClick={() => {
+              valtioState.activeEditorTab = ""
+              valtioState.introScreen = true
+              } } customStyles='w-fit px-4 py-2.5 font-bold text-sm' />
           </motion.div>
           <motion.div className='filtertabs-container' {...slideAnimation('up')}>
             {FilterTabs.map((tab) => (
