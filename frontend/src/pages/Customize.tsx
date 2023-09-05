@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 import config from '../configs/config';
 import valtioState from '../valtioStore/store';
-// import { download } from '../assets';
+import { download } from '../assets';
 import { downloadCanvasToImage, reader } from '../helpers/helpers';
 import { processBase64Image } from '../helpers/base64ToPNG';
 import { EditorTabs, FilterTabs, DecalTypes } from '../configs/constant';
@@ -67,10 +67,6 @@ const Customize = () => {
       })
 
       const data = await response.json();
-
-      // const processedImagePromise:any = await processBase64Image(data);
-
-      // handleDecals(type, `data:image/png;base64,${processedImagePromise.photo}`)
 
       if(!data.photo) return
 
@@ -158,6 +154,13 @@ const Customize = () => {
                 isActiveTab={activeFilterTab[tab.name]}
                 handleClick={() => handleActiveFilterTab(tab.name)} />
             ))}
+             <button className='download-btn' onClick={downloadCanvasToImage}>
+              <img
+                src={download}
+                alt='download_image'
+                className='w-3/5 h-3/5 object-contain'
+              />
+            </button>
           </motion.div>
         </>
       )}
